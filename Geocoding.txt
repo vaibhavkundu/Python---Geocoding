@@ -1,0 +1,28 @@
+%load_ext autotime
+import geopy
+
+import pandas as pd
+from geopy.geocoders import Nominatim
+#from geopy.extra.rate_limiter import RateLimiter
+#import matplotlib.pyplot as plt
+import tqdm
+from tqdm._tqdm_notebook import tqdm_notebook
+from tqdm import tqdm
+
+
+df = pd.read_csv("D:\Python_Datafiles\Book7.csv")
+df.head(2)
+
+
+#locator = Nominatim(user_agent="myGeocoder", timeout=10)
+#rgeocode = RateLimiter(locator.reverse, min_delay_seconds=0.001)
+
+locator = Nominatim(user_agent="myGeocoder")
+rgeocode = RateLimiter(locator.reverse)
+
+
+tqdm.pandas()
+df['Address'] = df['Address'].progress_apply(rgeocode)
+df.head()
+
+
